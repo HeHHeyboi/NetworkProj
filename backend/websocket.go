@@ -16,16 +16,14 @@ func handleWebSocket(ctx *gin.Context) {
 
 	defer conn.Close()
 
-	mutex.Lock()
 	clients[conn] = true
-	mutex.Unlock()
+	fmt.Println("New WebSocket connection")
 
 	for {
 		_, _, err := conn.ReadMessage()
 		if err != nil {
-			mutex.Lock()
+			fmt.Println("WebSocket disconnected: ", err)
 			delete(clients, conn)
-			mutex.Unlock()
 			break
 		}
 	}
