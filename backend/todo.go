@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"strconv"
 
 	"github.com/HeHHeyboi/Cafe_Management/backend/internal/database"
@@ -48,6 +49,7 @@ func createTODO(cfg *Config, ctx *gin.Context) {
 
 	err := cfg.db.CreateToDo(ctx.Request.Context(), param.Name)
 	if err != nil {
+		fmt.Println(err)
 		ctx.JSON(500, gin.H{"err": err.Error()})
 		return
 	}
@@ -100,6 +102,7 @@ func deleteTODO(cfg *Config, ctx *gin.Context) {
 
 	err = cfg.db.DeleteToDo(ctx.Request.Context(), int64(id))
 	if err != nil {
+		fmt.Println(err)
 		ctx.JSON(500, gin.H{"err": err.Error()})
 		return
 	}

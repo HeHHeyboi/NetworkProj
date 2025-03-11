@@ -9,6 +9,7 @@ import (
 	"sync"
 
 	"github.com/gin-contrib/cors"
+	"time"
 
 	"github.com/HeHHeyboi/Cafe_Management/backend/internal/database"
 	"github.com/gin-gonic/gin"
@@ -44,6 +45,7 @@ const enableForeignKey = `PRAGMA foreign_keys = ON;`
 func main() {
 	godotenv.Load()
 	dbName := "main.db"
+	interval := time.NewTicker(10 * time.Second)
 
 	db, err := sql.Open("sqlite", dbName)
 	defer db.Close()
@@ -106,8 +108,8 @@ func main() {
 	go func() {
 		for {
 			broadcastUpdateTodos(&cfg)
+			<-interval.C
 		}
-
 	}()
 
 	r.Run()
