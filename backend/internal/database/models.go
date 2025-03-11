@@ -6,63 +6,10 @@ package database
 
 import (
 	"database/sql"
-	"time"
 )
 
-type Bill struct {
-	BillID     string
-	Total      float64
-	PayDate    string
-	UserID     interface{}
-	GiveawayID sql.NullInt64
-	PaidStatus bool
-}
-
-type Gallery struct {
-	Gname     string
-	Startdate string
-	Enddate   string
-	Desc      sql.NullString
-	UserID    interface{}
-}
-
-type GiveAway struct {
-	ID     int64
-	Name   string
-	Amount int64
-	Remain int64
-	Desc   sql.NullString
-	Date   time.Time
-}
-
-type Image struct {
-	MenuID      sql.NullInt64
-	GiveawayID  sql.NullInt64
-	GalleryName sql.NullString
-	ImgUrl      string
-}
-
-type Menu struct {
-	MenuID   int64
+type Todo struct {
+	ID       int64
 	Name     string
-	Price    float64
-	MenuType string
-	Type     sql.NullString
-}
-
-type Order struct {
-	BillID     string
-	MenuID     int64
-	Amount     int64
-	TotalPrice float64
-	MenuName   string
-}
-
-type User struct {
-	UserID   interface{}
-	Fname    sql.NullString
-	Lname    sql.NullString
-	Email    string
-	Password string
-	Role     sql.NullString
+	Complete sql.NullBool
 }
