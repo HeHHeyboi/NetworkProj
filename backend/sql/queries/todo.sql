@@ -7,7 +7,7 @@ SELECT * FROM todo;
 
 -- name: UpdateToDo :exec
 UPDATE todo
-SET name = ?, complete = NOT complete
+SET complete = NOT complete
 WHERE id = ?;
 
 -- name: DeleteToDo :exec
