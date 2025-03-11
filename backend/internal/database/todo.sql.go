@@ -67,16 +67,11 @@ func (q *Queries) GetToDo(ctx context.Context) ([]Todo, error) {
 
 const updateToDo = `-- name: UpdateToDo :exec
 UPDATE todo
-SET name = ?, complete = NOT complete
+SET complete = NOT complete
 WHERE id = ?
 `
 
-type UpdateToDoParams struct {
-	Name string
-	ID   int64
-}
-
-func (q *Queries) UpdateToDo(ctx context.Context, arg UpdateToDoParams) error {
-	_, err := q.db.ExecContext(ctx, updateToDo, arg.Name, arg.ID)
+func (q *Queries) UpdateToDo(ctx context.Context, id int64) error {
+	_, err := q.db.ExecContext(ctx, updateToDo, id)
 	return err
 }

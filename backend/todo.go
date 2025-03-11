@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/HeHHeyboi/Cafe_Management/backend/internal/database"
 	"github.com/gin-gonic/gin"
 )
 
@@ -67,21 +66,7 @@ func updateTODO(cfg *Config, ctx *gin.Context) {
 		return
 	}
 
-	type Param struct {
-		Name string `json:"name"`
-	}
-
-	var param Param
-
-	if err := ctx.ShouldBind(&param); err != nil {
-		ctx.JSON(400, gin.H{"err": err.Error()})
-		return
-	}
-
-	err = cfg.db.UpdateToDo(ctx.Request.Context(), database.UpdateToDoParams{
-		Name: param.Name,
-		ID:   int64(id),
-	})
+	err = cfg.db.UpdateToDo(ctx.Request.Context(), int64(id))
 
 	if err != nil {
 		ctx.JSON(400, gin.H{"err": err.Error()})
