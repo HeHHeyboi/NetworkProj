@@ -4,12 +4,15 @@ import (
 	"database/sql"
 	"embed"
 	"fmt"
+	"net/http"
 	"os"
+	"sync"
 
 	"github.com/gin-contrib/cors"
 
 	"github.com/HeHHeyboi/Cafe_Management/backend/internal/database"
 	"github.com/gin-gonic/gin"
+	"github.com/gorilla/websocket"
 	"github.com/joho/godotenv"
 	"github.com/pressly/goose/v3"
 
@@ -23,6 +26,14 @@ type Config struct {
 
 //go:embed sql/schema/*.sql
 var embedMigration embed.FS
+
+var upgrader = websocket.Upgrader{
+	CheckOrigin: func(r *http.Request) bool { return true },
+}
+
+var clients = make(map[*websocket.Conn]bool)
+var broadcast = make(chan string)
+var mutex = sync.Mutex{}
 
 const enableForeignKey = `PRAGMA foreign_keys = ON;`
 
@@ -56,11 +67,6 @@ func main() {
 			panic(err)
 		}
 
-		fmt.Println("Reset Success")
-		if err != nil {
-			panic(err)
-		}
-
 		return
 	}
 
@@ -79,6 +85,8 @@ func main() {
 		AllowCredentials: true,
 	}))
 
+	r.GET("/ws", handleWebSocket)
+
 	r.GET("/todo", func(ctx *gin.Context) {
 		getTODO(&cfg, ctx)
 	})
@@ -94,6 +102,13 @@ func main() {
 	r.GET("/reset", func(ctx *gin.Context) {
 		cfg.db.Delete(ctx.Request.Context())
 	})
+
+	go func() {
+		for {
+			broadcastUpdateTodos(&cfg)
+		}
+
+	}()
 
 	r.Run()
 }
