@@ -52,7 +52,7 @@ func createTODO(cfg *Config, ctx *gin.Context) {
 		return
 	}
 
-	broadcastUpdateTodos(cfg, ctx)
+	broadcastUpdateTodos(cfg)
 	ctx.Status(201)
 
 }
@@ -86,7 +86,7 @@ func updateTODO(cfg *Config, ctx *gin.Context) {
 		return
 	}
 
-	broadcastUpdateTodos(cfg, ctx)
+	broadcastUpdateTodos(cfg)
 	ctx.Status(204)
 }
 func deleteTODO(cfg *Config, ctx *gin.Context) {
@@ -103,6 +103,6 @@ func deleteTODO(cfg *Config, ctx *gin.Context) {
 		ctx.JSON(500, gin.H{"err": err.Error()})
 		return
 	}
-	broadcastUpdateTodos(cfg, ctx)
+	broadcastUpdateTodos(cfg)
 	ctx.Status(204)
 }

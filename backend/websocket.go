@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/gin-gonic/gin"
@@ -30,8 +31,8 @@ func handleWebSocket(ctx *gin.Context) {
 	}
 }
 
-func broadcastUpdateTodos(cfg *Config, ctx *gin.Context) {
-	datas, err := cfg.db.GetToDo(ctx.Request.Context())
+func broadcastUpdateTodos(cfg *Config) {
+	datas, err := cfg.db.GetToDo(context.Background())
 	if err != nil {
 		fmt.Println(err.Error())
 		return
