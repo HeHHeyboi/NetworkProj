@@ -5,7 +5,9 @@ import TodoForm from "@/app/components/TodoForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-const API_URL = "http://localhost:8080/todo";
+// const API_URL = "http://localhost:8080/todo";
+const API_URL = "http://10.53.49.156/api/todo";
+// const WS_URL = "http://10.53.52.30/api/ws";
 
 export default function AddToDoPage() {
   const router = useRouter();
