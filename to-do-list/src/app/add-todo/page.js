@@ -5,9 +5,10 @@ import TodoForm from "@/app/components/TodoForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-// const API_URL = "http://localhost:8080/todo";
-const API_URL = "http://10.53.49.156/api/todo";
-// const WS_URL = "http://10.53.52.30/api/ws";
+const API_URL = "http://localhost:8080/todo";
+const WS_URL = "ws://localhost:8080/ws";
+// const API_URL = "http://192.168.1.113/api/todo";
+// const WS_URL = "ws://192.168.1.113/ws";
 
 export default function AddToDoPage() {
   const router = useRouter();
@@ -25,7 +26,7 @@ export default function AddToDoPage() {
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
   
       // ใช้ WebSocket แจ้งเตือนให้หน้าแรกอัปเดต
-      const socket = new WebSocket("ws://localhost:8080/ws");
+      const socket = new WebSocket(WS_URL);
       socket.onopen = () => {
         console.log("🔔 Sending WebSocket update...");
         socket.send("update");

@@ -1,17 +1,19 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import TodoList from "@/app/components/TodoList";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 
-// const API_URL = "http://localhost:8080/todo";
-// const WS_URL = "http://localhost:8080/ws";
-const API_URL = "http://10.53.49.156/api/todo";
-const WS_URL = "http://10.53.49.156/api/ws";
+const API_URL = "http://localhost:8080/todo";
+const WS_URL = "http://localhost:8080/ws";
+// const API_URL = "http://192.168.1.113/api/todo";
+// const WS_URL = "ws://192.168.1.113/ws/";
 
 export default function HomePage() {
+  const router = useRouter();
   const [todos, setTodos] = useState([]);
 
   // โหลด To-Do เมื่อหน้าแรกโหลด
@@ -50,8 +52,18 @@ export default function HomePage() {
         }
       };
 
-      //socket.onerror = (err) => console.error("🚨 WebSocket error:", err);
-
+	// socket.onerror = (e) => {
+	// 	console.error("🚨 WebSocket error occurred:", e);
+	// 	if (e && e.message) {
+	// 		console.error("Error message:", e.message);
+	// 	}
+	// 	if (e && e.code) {
+	// 		console.error("Error code:", e.code);
+	// 	}
+	// 	if (e && e.target) {
+	// 		console.error("Error target:", e.target);
+	// 	}
+	// };
       socket.onclose = () => {
         console.warn("⚠️ WebSocket closed. Reconnecting in 3s...");
         setTimeout(connectWebSocket, 3000);

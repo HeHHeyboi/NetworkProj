@@ -6,10 +6,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 
-// const API_URL = "http://localhost:8080/todo";
-// const WS_URL = "http://localhost:8080/ws";
-const API_URL = "http://10.53.49.156/api/todo";
-const WS_URL = "http://10.53.49.156/api/ws";
+const API_URL = "http://localhost:8080/todo";
+const WS_URL = "http://localhost:8080/ws";
+// const API_URL = "http://192.168.1.113/api/todo";
+// const WS_URL = "ws://192.168.1.113/ws";
 
 export default function HomePage() {
   const [todos, setTodos] = useState([]);

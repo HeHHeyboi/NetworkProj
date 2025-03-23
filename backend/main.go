@@ -81,7 +81,7 @@ func main() {
 	r := gin.New()
 	r.Use(gin.Logger())
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:3000", "http://localhost:3001", "http://10.53.52.30", "http://10.53.49.156"},
+		AllowOrigins:     []string{"*"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
 		AllowHeaders:     []string{"Content-Type", "Authorization", "X-Requested-With"},
 		AllowCredentials: true,
@@ -107,8 +107,8 @@ func main() {
 
 	go func() {
 		for {
-			broadcastUpdateTodos(&cfg)
 			<-interval.C
+			broadcastUpdateTodos(&cfg)
 		}
 	}()
 
